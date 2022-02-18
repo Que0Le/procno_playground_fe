@@ -2,12 +2,16 @@ import {Container, Grid, Link} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 // import ReactPlayer from "react-player"
 // import ES_Voice_Clip_Male_120_SFX_Producer from  "../assets/audio/ES_Voice_Clip_Male_120_SFX_Producer.mp3"
 
+import { createTheme, ThemeProvider } from "@material-ui/core";
+import AudioPlayer from "material-ui-audio-player";
+
+const muiTheme = createTheme({});
 
 const preventDefault = (event) => event.preventDefault()
 
@@ -91,11 +95,10 @@ function LanguagesPreference(topicOverview) {
 }
 
 export default function TopicOverview(topicOverview) {
+	const [audioFile, setAudioFile] = useState(null);
+
 	console.log(topicOverview);
 	let tO = topicOverview["topicOverview"];
-	const Img = styled("img")({
-		margin: "auto", display: "block", maxWidth: "100%", maxHeight: "100%",
-	});
 
 	const limitLines = {
 		display: "-webkit-box",
@@ -115,11 +118,12 @@ export default function TopicOverview(topicOverview) {
 	>
 		<Grid container spacing={2}>
 			<Grid item>
-				<ButtonBase sx={{width: 200, height: 128}}>
-					<Img alt="complex" src="https://mui.com/static/images/grid/complex.jpg"/>
-				</ButtonBase>
+				<Box sx={{ width: 200, height: 128}}>
+					<ThemeProvider theme={muiTheme}>
+						<AudioPlayer src="http://192.168.1.15:8888/api/v1/data/dummies-records/" />
+					</ThemeProvider>
+				</Box>
 				<LanguagesPreference topicOverview={tO}/>
-				{/*<ReactPlayer playing url={[ES_Voice_Clip_Male_120_SFX_Producer]} />*/}
 			</Grid>
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
