@@ -1,56 +1,48 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 // import { Route, BrowserRouter as Router } from "react-router-dom";
 import api from "./services/api";
+import {Container, CssBaseline, Grid} from "@mui/material";
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import ButtonBase from '@mui/material/ButtonBase';
+import TopicOverview from "./components/TopicOverview";
+
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+	const [user, setUser] = useState(null);
+	const [topics, setTopics] = useState([]);
+	const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(() => {
-      api.login("joflaverty0@businessinsider.com", "upfsXLy8VA4")
-        .then(user => {
-          if (user) {
-            console.log(user);
-              api.getOwnerTopics(user)
-                  .then(topics => {
-                      if (topics) {
-                          console.log(topics);
-                      }
-                  })
-            setUser(user);
-          }
-        });
-      if (user) {
-          // services.getOwnerTopics(user)
-          //     .then(topics => {
-          //         if (topics) {
-          //             console.log(topics);
-          //         }
-          //     })
-    }
-  }, []);
-
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	useEffect(() => {
+		api.login("joflaverty0@businessinsider.com", "upfsXLy8VA4")
+			.then(user => {
+				if (user) {
+					console.log(user);
+					api.getOwnerTopics(user)
+						.then(topics => {
+							if (topics) {
+								// console.log(topics);
+								setTopics(topics);
+							}
+						})
+					setUser(user);
+				}
+			});
+	}, []);
+	return (
+		<React.Fragment>
+			<CssBaseline />
+			<Container fixed sx={{ width: 800 }}>
+				{topics.map((topicOverview, key) => {
+					return <TopicOverview key={key} topicOverview={topicOverview}/>;
+				})}
+			</Container>
+		</React.Fragment>
+	);
 }
 
 export default App;
