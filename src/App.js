@@ -31,7 +31,7 @@ function App() {
 						<Redirect to="/dashboard" />
 					</Route>
 					<Route path="/about">
-						<About />
+						<About user={user}/>
 					</Route>
 					<Route path="/home">
 						<Home user={user}/>

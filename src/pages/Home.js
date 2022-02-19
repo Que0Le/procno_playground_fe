@@ -7,12 +7,14 @@ export default function Home({user, setUser}) {
 	const [topics, setTopics] = useState([]);
 	const [areTopicsLoaded, setAreTopicsLoaded] = useState(false);
 	const changeRoute = useChangeRoute();
-	// console.log(areTopicsLoaded);
-	// console.log(user);
+
+	if (!user) changeRoute("/dashboard");
 
 	useEffect(() => {
-		// console.log(user);
-		if (!user) changeRoute("/dashboard");
+		if (!user) {
+			changeRoute("/dashboard");
+			return;
+		}
 		if (areTopicsLoaded) return;
 		api.getOwnerTopics(user)
 			.then(topics => {

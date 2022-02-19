@@ -16,7 +16,8 @@ export default function Login({user, setUser}) {
 		)
 			.then(response => {
 				if (response["status"] === "success") {
-					setUser(response["user"]);
+					// TODO: this looks funny. Might need to fix this and api
+					response["user"].then(user => setUser(user));
 					setErrorMessage("");
 					setIsLoggedIn(true);
 					changeRoute("/dashboard");
