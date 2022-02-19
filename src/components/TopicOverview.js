@@ -1,16 +1,16 @@
-import {Container, Grid, Link} from "@mui/material";
-import ButtonBase from "@mui/material/ButtonBase";
+import {Grid, Link} from "@mui/material";
+// import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import React, {useEffect, useState} from "react";
-import {styled} from "@mui/material/styles";
+import React from "react";
+// import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 // import ReactPlayer from "react-player"
 // import ES_Voice_Clip_Male_120_SFX_Producer from  "../assets/audio/ES_Voice_Clip_Male_120_SFX_Producer.mp3"
-
+import {ENDPOINTS} from "../utils/config";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import AudioPlayer from "material-ui-audio-player";
-
+import {limitXLines} from "../utils/customStyles";
 const muiTheme = createTheme({});
 
 const preventDefault = (event) => event.preventDefault()
@@ -36,9 +36,8 @@ function TagLinks(tags) {
 	</div>
 }
 
-function AuthorNameAndTopicDateCreated(topicOverview) {
-	const tO = topicOverview["topicOverview"];
-	const dateObject = new Date(tO["topic_created_at"]);
+function AuthorNameAndTopicDateCreated({ topicOverview }) {
+	const dateObject = new Date(topicOverview["topic_created_at"]);
 	let topicDateCreated = dateObject.getDate() + "/" + dateObject.getMonth() + "/" + dateObject.getFullYear()
 	return <div>
 		<Box
@@ -55,7 +54,7 @@ function AuthorNameAndTopicDateCreated(topicOverview) {
 		>
 			<Link underline="hover" href="#">
 				<Typography variant="body2" component="div">
-					{"@" + tO["owner_username"]}
+					{"@" + topicOverview["owner_username"]}
 				</Typography></Link>
 			<Typography variant="body2" component="div">
 				{topicDateCreated}
@@ -64,11 +63,10 @@ function AuthorNameAndTopicDateCreated(topicOverview) {
 	</div>
 }
 
-function LanguagesPreference(topicOverview) {
-	const tO = topicOverview["topicOverview"];
+function LanguagesPreference({ topicOverview }) {
 	return <div>
 		<Typography variant="body2" component="div">
-			{"Source: " + tO["source_language"] + " (" + tO["source_level"] + ")"}
+			{"Source: " + topicOverview["source_language"] + " (" + topicOverview["source_level"] + ")"}
 		</Typography>
 		<Box
 			sx={{
@@ -85,7 +83,7 @@ function LanguagesPreference(topicOverview) {
 			<Typography variant="body2">
 				Target:
 			</Typography>
-			{tO["wish_correct_languages"].map((wish_lang) => {
+			{topicOverview["wish_correct_languages"].map((wish_lang) => {
 				return <Typography key={wish_lang} variant="body2" component="div">
 					{wish_lang}
 				</Typography>
@@ -94,19 +92,8 @@ function LanguagesPreference(topicOverview) {
 	</div>
 }
 
-export default function TopicOverview(topicOverview) {
-	const [audioFile, setAudioFile] = useState(null);
-
-	console.log(topicOverview);
-	let tO = topicOverview["topicOverview"];
-
-	const limitLines = {
-		display: "-webkit-box",
-		overflow: "hidden",
-		WebkitBoxOrient: "vertical",
-		WebkitLineClamp: 3,
-	};
-
+export default function TopicOverview({ topicOverview }) {
+	// console.log(topicOverview);
 	return <Paper
 		sx={{
 			p: 2,
@@ -120,35 +107,35 @@ export default function TopicOverview(topicOverview) {
 			<Grid item>
 				<Box sx={{ width: 200, height: 128}}>
 					<ThemeProvider theme={muiTheme}>
-						<AudioPlayer src="http://192.168.1.15:8888/api/v1/data/dummies-records/" />
+						<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]} />
 					</ThemeProvider>
 				</Box>
-				<LanguagesPreference topicOverview={tO}/>
+				<LanguagesPreference topicOverview={topicOverview}/>
 			</Grid>
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
 					<Grid item xs>
 						<Link underline="hover" href="#">
 							<Typography>
-								{tO["topic_title"]}
+								{topicOverview["topic_title"]}
 							</Typography>
 						</Link>
-						<AuthorNameAndTopicDateCreated topicOverview={tO}/>
-						<Typography sx={{ ...limitLines, fontStyle: "italic" }} variant="body2" gutterBottom>
-							{tO["readtext"]}
+						<AuthorNameAndTopicDateCreated topicOverview={topicOverview}/>
+						<Typography sx={{ ...limitXLines(3), fontStyle: "italic" }} variant="body2" gutterBottom>
+							{topicOverview["readtext"]}
 						</Typography>
 						<Typography variant="body2" color="text.secondary">
 							ID: 1030114
 						</Typography>
 					</Grid>
 					<Grid item>
-						<TagLinks tags={tO["tag_and_uniq_id_s"]} />
+						<TagLinks tags={topicOverview["tag_and_uniq_id_s"]} />
 					</Grid>
 				</Grid>
 				<Grid item>
 					<Box sx={{ marginLeft: 1 }}>
 						<Typography variant="subtitle1" component="div">
-							{tO["nbr_answer"] + " answers"}
+							{topicOverview["nbr_answer"] + " answers"}
 						</Typography>
 						<Typography variant="subtitle1" component="div">
 							$19.00
