@@ -3,7 +3,7 @@ import TopicOverviewList from "../components/TopicOverviewList";
 import api from "../services/api";
 import useChangeRoute from "../hooks/useChangeRoute";
 
-export default function Home({ user }) {
+export default function Home({user, setUser}) {
 	const [topics, setTopics] = useState([]);
 	const [areTopicsLoaded, setAreTopicsLoaded] = useState(false);
 	const changeRoute = useChangeRoute();

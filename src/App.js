@@ -1,10 +1,10 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import React, {useEffect, useState} from "react";
 // import { Route, BrowserRouter as Router } from "react-router-dom";
-import api from "./services/api";
-import {Button} from "@mui/material";
-import { Link as RRDLink} from "react-router-dom";
+// import api from "./services/api";
+// import {Button} from "@mui/material";
+// import { Link as RRDLink} from "react-router-dom";
 import {Route, BrowserRouter as Router, Redirect} from "react-router-dom";
 
 import About from "./pages/About";
@@ -17,19 +17,11 @@ import Signup from "./pages/Signup";
 
 function App() {
 	const [user, setUser] = useState(null);
-	const [isLoaded, setIsLoaded] = useState(false);
-
-	useEffect(() => {
-		if (isLoaded) return;
-		api.login("joflaverty0@businessinsider.com", "upfsXLy8VA4")
-			.then(user => {
-				if (user) {
-					console.log(user);
-					setUser(user);
-					setIsLoaded(true);
-				}
-			});
-	});
+	// const [isLoaded, setIsLoaded] = useState(false);
+	//
+	// useEffect(() => {
+	//
+	// });
 	return (
 		<Router>
 			<div>
@@ -48,10 +40,10 @@ function App() {
 						<Dashboard user={user}/>
 					</Route>
 					<Route path="/login">
-						<Login user={user}/>
+						<Login user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/signup">
-						<Signup user={user}/>
+						<Signup user={user} setUser={setUser}/>
 					</Route>
 				</>
 			</div>

@@ -3,6 +3,12 @@ import {ENDPOINTS} from "../utils/config";
 
 
 let api = {
+    /**
+     * Login to backend.
+     * @param email
+     * @param password
+     * @returns {}
+     */
     login: (email, password) => {
         let formData = new FormData();
         formData.append("username", email);  // yes, its username but the content is email
@@ -12,9 +18,21 @@ let api = {
             {method: "POST", body: formData}
         ).then(response => {
             if (response.status === 200) {
-                return response.json();
+                return {
+                    status: "success",
+                    user: response.json()
+                };
+            } else if (response.status === 400) {
+                return {
+                    status: "failure",
+                    message: "Email or password was not correct!"
+                };
+            } else {
+                return {
+                    status: "unknown",
+                    message: "unknown"
+                };
             }
-            return null;
         });
     },
 
