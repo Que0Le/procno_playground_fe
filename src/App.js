@@ -38,7 +38,7 @@ function App() {
 					<Route path="/home">
 						<Home user={user}/>
 					</Route>
-					<Route path="/topics/:topicUniqId">
+					<Route path="/topic/:topicUniqId">
 						<Topic user={user}/>
 					</Route>
 					<Route path="/create-topic">

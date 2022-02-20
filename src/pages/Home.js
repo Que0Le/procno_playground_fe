@@ -12,7 +12,7 @@ export default function Home({user, setUser}) {
 	const changeRoute = useChangeRoute();
 
 	if (!user) changeRoute("/dashboard");
-
+	// console.log(user)
 	useEffect(() => {
 		if (!user) {
 			changeRoute("/dashboard");

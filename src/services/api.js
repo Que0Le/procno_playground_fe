@@ -52,15 +52,41 @@ let api = {
         })
     },
 
+    getTopicByUniqID: (uniqID) => {
+        return fetch(
+            ENDPOINTS.getTopicByUniqID + uniqID,
+            {method: "GET"}
+        ).then(response => {
+            if (response.status === 200) {
+                // console.log(response.json())
+                return response.json();
+            }
+            return null;
+        })
+    },
+
+    getAnswersForTopicByTopicUniqID: (uniqID) => {
+        return fetch(
+            ENDPOINTS.getAnswersForTopicByTopicUniqID + uniqID,
+            {method: "GET"}
+        ).then(response => {
+            if (response.status === 200) {
+                // console.log(response.json())
+                return response.json();
+            }
+            return null;
+        })
+    },
+
     /**
-     * Get topics to display on /dashboard
+     * Get topics to display on "/dashboard"
      * If user is null, backend will generate some random topics
      * Else, backend will generate topics tailored for this user
      * (Any user, not just the current logged-in user!)
      * @param user
      * @returns {*[]}
      */
-    geTopicsForDashboardT: (user) => {
+    geTopicsForDashboard: (user) => {
         if (!user) {
             return [];
         } else {
