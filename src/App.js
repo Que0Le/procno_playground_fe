@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/NavBar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Topic from "./pages/Topic";
+import CreateTopic from "./pages/CreateTopic";
 
 
 function App() {
@@ -35,6 +37,12 @@ function App() {
 					</Route>
 					<Route path="/home">
 						<Home user={user}/>
+					</Route>
+					<Route path="/topics/:topicUniqId">
+						<Topic user={user}/>
+					</Route>
+					<Route path="/create-topic">
+						<CreateTopic user={user}/>
 					</Route>
 					<Route path="/dashboard">
 						<Dashboard user={user}/>
