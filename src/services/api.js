@@ -11,7 +11,7 @@ let api = {
      */
     login: (email, password) => {
         let formData = new FormData();
-        formData.append("username", email);  // yes, its username but the content is email
+        formData.append("username", email);  // yes, username but the content is email
         formData.append("password", password);
         return fetch(
             ENDPOINTS.login,
@@ -26,6 +26,31 @@ let api = {
                 return {
                     status: "failure",
                     message: "Email or password was not correct!"
+                };
+            } else {
+                return {
+                    status: "unknown",
+                    message: "unknown"
+                };
+            }
+        });
+    },
+
+    sendTopicToServer: (isNewTopic, topic) => {
+
+        return fetch(
+            ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
+            {method: isNewTopic ? "POST" : "PUT", body: topic}
+        ).then(response => {
+            if (response.status === 200) {
+                return {
+                    status: "success",
+                    topic: response.json()
+                };
+            } else if (response.status === 400) {
+                return {
+                    status: "failure",
+                    message: "error!"
                 };
             } else {
                 return {

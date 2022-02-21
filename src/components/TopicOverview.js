@@ -1,4 +1,4 @@
-import {Grid, Link} from "@mui/material";
+import {Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import React from "react";
@@ -9,9 +9,10 @@ import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
 const muiTheme = createTheme({});
 import {TagLinks, LanguagesPreference, AuthorNameAndTopicDateCreated} from "./TopicView"
+import {Link} from "react-router-dom";
 
 export default function TopicOverview({ user, topicOverview, limitReadText=true }) {
-	console.log(user);
+	// console.log(user);
 	return <Paper
 		sx={{
 			p: 2,
@@ -33,7 +34,8 @@ export default function TopicOverview({ user, topicOverview, limitReadText=true 
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
 					<Grid item xs>
-						<Link underline="hover" href={"/topic/" + topicOverview["topic_uniq_id"]} params={{user: user}}>
+						{/*<Link underline="hover" href={"/topic/" + topicOverview["topic_uniq_id"]} params={{user: user}}>*/}
+						<Link to={{pathname: "/topic/" + topicOverview["topic_uniq_id"], state: {user: user}}}>
 							<Typography>
 								{topicOverview["topic_title"]}
 							</Typography>
