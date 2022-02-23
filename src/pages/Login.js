@@ -26,39 +26,6 @@ export default function Login({user, setUser}) {
 				}
 			});
 	}
-// 	topic_uniq_id: str
-// 	topic_title: str
-// 	source_language: str
-// 	source_level: str
-// 	wish_correct_languages: List[str]
-// 	topic_created_at: datetime
-// 	topic_updated_at: datetime
-// #
-// 	owner_uniq_id: str
-// 	owner_username: str
-// #
-// 	nbr_answer: int
-// #
-// 	tag_and_uniq_id_s: List[TagAndID] = None
-// #
-// 	question_uniq_id: str
-// 	question_created_at: datetime
-// 	question_updated_at: datetime
-// #
-// 	readtext_uniq_id: str
-// 	readtext: str
-// 	readtext_created_at: datetime
-// 	readtext_updated_at: datetime
-// #
-// 	record_uniq_id: str
-// 	record_filename: str
-// 	record_created_at: datetime
-// 	record_updated_at: datetime
-// #
-// 	commentar_uniq_id: str
-// 	commentar: str
-// 	commentar_created_at: datetime
-// 	commentar_updated_at: datetime
 
 	function handleClear() {
 		document.getElementById("email_input").value= "";

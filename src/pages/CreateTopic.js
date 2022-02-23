@@ -12,7 +12,7 @@ export default function CreateTopic({user, setUser}) {
 	return (
 		<div>
 			<h1>Create new topic</h1>
-			<TopicEditor user={user}></TopicEditor>
+			<TopicEditor user={user} isNewTopic={true} oldTopic={null}/>
 		</div>
 	)
 }
