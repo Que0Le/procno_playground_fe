@@ -112,15 +112,19 @@ export default function Navbar({user, setUser}) {
 						user
 							?
 							<>
-								<NavLink to="/create-topic" activeStyle={{color: "black"}}>
-									Create topic
-								</NavLink>
 								<NavLink to="/home" activeStyle={{color: "black"}}>
 									Home
 								</NavLink>
+								<NavLink to="/create-topic" activeStyle={{color: "black"}}>
+									Create topic
+								</NavLink>
 							</>
 							:
-							<></>
+							<>
+								{/*<NavLink to="/create-topic" activeStyle={{color: "black"}}>*/}
+								{/*	Create topic*/}
+								{/*</NavLink>*/}
+							</>
 					}
 
 					<NavLink to="/about" activeStyle={{color: "black"}}>

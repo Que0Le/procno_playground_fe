@@ -7,7 +7,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import {ENDPOINTS} from "../utils/config";
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import AudioPlayer from "material-ui-audio-player";
+// import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
 const muiTheme = createTheme({});
 
@@ -55,9 +55,9 @@ export default function AnswerView({ answer }) {
 		<Grid container spacing={2}>
 			<Grid item>
 				<Box sx={{ width: 200, height: 128}}>
-					<ThemeProvider theme={muiTheme}>
-						<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + answer["record_filename"]} />
-					</ThemeProvider>
+					{/*<ThemeProvider theme={muiTheme}>*/}
+					{/*	<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + answer["record_filename"]} />*/}
+					{/*</ThemeProvider>*/}
 				</Box>
 				{/*<LanguagesPreference topicOverview={topicOverview}/>*/}
 			</Grid>

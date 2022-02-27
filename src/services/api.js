@@ -36,64 +36,44 @@ let api = {
         });
     },
 
-    sendTopicToServer: (isNewTopic, topic) => {
-
+    sendTopicToServer: (user, isNewTopic, topic) => {
+        let token = (user["user"]["access_token"])
+        // console.log(topic)
+        let headers = {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
         return fetch(
             ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
-            {method: isNewTopic ? "POST" : "PUT", body: topic}
-        ).then(response => {
-            if (response.status === 200) {
-                return {
-                    status: "success",
-                    topic: response.json()
-                };
-            } else if (response.status === 400) {
-                return {
-                    status: "failure",
-                    message: "error!"
-                };
-            } else {
-                return {
-                    status: "unknown",
-                    message: "unknown"
-                };
+            {
+                method: isNewTopic ? "POST" : "PUT",
+                headers: headers,
+                body: JSON.stringify(topic),
             }
-        });
+        ).then(response => response.json())
+            .then(data => {
+                return data;
+            })
+        // ).then(response => {
+        //     if (response.status === 200) {
+        //         console.log({"r": response.json()["topic"]})
+        //         return {
+        //             status: "success",
+        //             topic: response.json()["topic"]
+        //         };
+        //     } else if (response.status === 400) {
+        //         return {
+        //             status: "failure",
+        //             message: "error!"
+        //         };
+        //     } else {
+        //         return {
+        //             status: "unknown",
+        //             message: "unknown"
+        //         };
+        //     }
+        // });
     },
-    // 	topic_uniq_id: str
-// 	topic_title: str
-// 	source_language: str
-// 	source_level: str
-// 	wish_correct_languages: List[str]
-// 	topic_created_at: datetime
-// 	topic_updated_at: datetime
-// #
-// 	owner_uniq_id: str
-// 	owner_username: str
-// #
-// 	nbr_answer: int
-// #
-// 	tag_and_uniq_id_s: List[TagAndID] = None
-// #
-// 	question_uniq_id: str
-// 	question_created_at: datetime
-// 	question_updated_at: datetime
-// #
-// 	readtext_uniq_id: str
-// 	readtext: str
-// 	readtext_created_at: datetime
-// 	readtext_updated_at: datetime
-// #
-// 	record_uniq_id: str
-// 	record_filename: str
-// 	record_created_at: datetime
-// 	record_updated_at: datetime
-// #
-// 	commentar_uniq_id: str
-// 	commentar: str
-// 	commentar_created_at: datetime
-// 	commentar_updated_at: datetime
-
 
     // TODO: filter, limit ...
     getOwnerTopics: (user) => {

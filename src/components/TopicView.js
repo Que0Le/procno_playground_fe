@@ -8,12 +8,12 @@ import Box from "@mui/material/Box";
 // import ReactPlayer from "react-player"
 // import ES_Voice_Clip_Male_120_SFX_Producer from  "../assets/audio/ES_Voice_Clip_Male_120_SFX_Producer.mp3"
 import {ENDPOINTS} from "../utils/config";
-import {createTheme, ThemeProvider} from "@material-ui/core";
-import AudioPlayer from "material-ui-audio-player";
+// import {createTheme, ThemeProvider} from "@material-ui/core";
+// import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
 import {Link} from "react-router-dom";
 
-const muiTheme = createTheme({});
+// const muiTheme = createTheme({});
 
 const preventDefault = (event) => event.preventDefault()
 
@@ -106,9 +106,9 @@ export default function TopicView({user, topicOverview, limitReadText = true}) {
 		}}
 	>
 		<Box sx={{width: "100%", height: 66}}>
-			<ThemeProvider theme={muiTheme}>
-				<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}/>
-			</ThemeProvider>
+			{/*<ThemeProvider theme={muiTheme}>*/}
+			{/*	<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}/>*/}
+			{/*</ThemeProvider>*/}
 		</Box>
 		<Grid container spacing={2}>
 			<Grid item xs={12} sm container>

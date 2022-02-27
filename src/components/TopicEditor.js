@@ -45,11 +45,12 @@ export default function TopicEditor({user, oldTopic, isNewTopic}) {
 			newTopic["topic_title"] = inputValues["title_input"]
 			newTopic["source_language"] = inputValues["source_languages_input"]
 			newTopic["source_level"] = inputValues["source_level_input"]
-			newTopic["owner_uniq_id"] = user["uniq_id"]
-			newTopic["owner_username"] = user["username"]
+			newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
+			newTopic["owner_username"] = user ? user["username"] : ""
 			newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
 			newTopic["tags"] = inputValues["tags_input"].split(",")
 			newTopic["readtext"] = inputValues["readtext_input"]
+			newTopic["record_filename"] = "__PLACE__HOLDER__"
 			newTopic["commentar"] = inputValues["commentar_input"]
 		} else {
 			oldTopic["topic_title"] = inputValues["title_input"]
@@ -62,13 +63,15 @@ export default function TopicEditor({user, oldTopic, isNewTopic}) {
 		}
 		// setErrorMessage("");
 		// console.log(newTopic);
-		api.sendTopicToServer(isNewTopic, isNewTopic ? newTopic : oldTopic)
+		api.sendTopicToServer(user={user}, isNewTopic, isNewTopic ? newTopic : oldTopic)
 			.then(response => {
 				if (response["status"] === "success") {
+					// console.log({"response": response})
+					console.log(response["topic"])
 					setErrorMessage("");
 					// TODO: this looks funny. Might need to fix this and api
 					// response["topic"].then(topic => changeRoute("/topic/" + topic["topic_uniq_id"]));
-					response["topic"].then(topic => console.log(topic));
+					// response.then(data => console.log(data["topic"]));
 				} else {
 					setErrorMessage(response["message"])
 				}
@@ -85,9 +88,13 @@ export default function TopicEditor({user, oldTopic, isNewTopic}) {
 		document.getElementById("commentar_input").value = "";
 	}
 
-	// useEffect(() => {
-	//
-	// })
+	useEffect(() => {
+		const now = Date.now();
+		Object.keys(labels).forEach(k => {
+			// console.log(k)
+			document.getElementById(k).value = now;
+		})
+	})
 	return (
 		<div>
 			<h1>Topic editor</h1>
