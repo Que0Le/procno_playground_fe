@@ -15,7 +15,6 @@ export default function Topic({user}) {
 	// const changeRoute = useChangeRoute();
 
 	const {topicUniqId} = useParams()
-	console.log(user)
 	useEffect(() => {
 		if (!isTopicLoaded) {
 			api.getTopicByUniqID(topicUniqId)

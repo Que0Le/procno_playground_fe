@@ -14,7 +14,7 @@ const labels = {
 	"commentar_input": "Commentar"
 }
 
-export default function TopicEditor({user, oldTopic, isNewTopic}) {
+export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNewTopic=true}) {
 	const [errorMessage, setErrorMessage] = useState("");
 	const changeRoute = useChangeRoute();
 
@@ -66,12 +66,10 @@ export default function TopicEditor({user, oldTopic, isNewTopic}) {
 		api.sendTopicToServer(user={user}, isNewTopic, isNewTopic ? newTopic : oldTopic)
 			.then(response => {
 				if (response["status"] === "success") {
-					// console.log({"response": response})
-					console.log(response["topic"])
 					setErrorMessage("");
-					// TODO: this looks funny. Might need to fix this and api
-					// response["topic"].then(topic => changeRoute("/topic/" + topic["topic_uniq_id"]));
-					// response.then(data => console.log(data["topic"]));
+					if (changeRouteToNewTopic) {
+						changeRoute("/topic/" + response["topic"]["topic_uniq_id"]);
+					}
 				} else {
 					setErrorMessage(response["message"])
 				}
