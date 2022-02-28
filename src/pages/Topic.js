@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import api from "../services/api";
 import Box from "@mui/material/Box";
 import {useParams} from "react-router-dom";
-import TopicOverview from "../components/TopicOverview";
+// import TopicOverview from "../components/TopicOverview";
 import AnswerViewList from "../components/AnswerViewList";
 import TopicView from "../components/TopicView";
 

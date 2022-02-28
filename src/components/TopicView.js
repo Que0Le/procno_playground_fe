@@ -3,17 +3,11 @@ import {Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import React from "react";
-// import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
-// import ReactPlayer from "react-player"
-// import ES_Voice_Clip_Male_120_SFX_Producer from  "../assets/audio/ES_Voice_Clip_Male_120_SFX_Producer.mp3"
 import {ENDPOINTS} from "../utils/config";
-// import {createTheme, ThemeProvider} from "@material-ui/core";
-// import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
 import {Link} from "react-router-dom";
-
-// const muiTheme = createTheme({});
+import AudioPlayer from "react-h5-audio-player";
 
 const preventDefault = (event) => event.preventDefault()
 
@@ -32,7 +26,11 @@ export function TagLinks(tags) {
 			onClick={preventDefault}
 		>
 			{tags["tags"].map((tag) => {
-				return <Link key={tag["tag_uniq_id"]} underline="hover" href="#">{"#" + tag["tag"]}</Link>
+				return <Link
+					key={tag["tag_uniq_id"]} underline="hover"
+					to={{pathname: "/tag/" + tag["tag"]}}>
+					{"#" + tag["tag"]}
+				</Link>
 			})}
 		</Box>
 	</div>
@@ -54,7 +52,7 @@ export function AuthorNameAndTopicDateCreated({topicOverview}) {
 			}}
 			onClick={preventDefault}
 		>
-			<Link underline="hover" href="#">
+			<Link underline="hover" to={{pathname: "/user/" + topicOverview["owner_username"]}}>
 				<Typography variant="body2" component="div">
 					{"@" + topicOverview["owner_username"]}
 				</Typography></Link>
@@ -106,9 +104,14 @@ export default function TopicView({user, topicOverview, limitReadText = true}) {
 		}}
 	>
 		<Box sx={{width: "100%", height: 66}}>
-			{/*<ThemeProvider theme={muiTheme}>*/}
-			{/*	<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}/>*/}
-			{/*</ThemeProvider>*/}
+			<AudioPlayer
+				autoPlay={false}
+				showJumpControls={false}
+				customAdditionalControls={[]}
+				src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}
+				onPlay={e => console.log("onPlay")}
+				// other props here
+			/>
 		</Box>
 		<Grid container spacing={2}>
 			<Grid item xs={12} sm container>

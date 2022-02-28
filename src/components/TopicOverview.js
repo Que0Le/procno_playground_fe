@@ -1,18 +1,27 @@
-import {Grid} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import React from "react";
 import Box from "@mui/material/Box";
 import {ENDPOINTS} from "../utils/config";
-import { createTheme, ThemeProvider } from "@material-ui/core";
-// import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
-// const muiTheme = createTheme({});
 import {TagLinks, LanguagesPreference, AuthorNameAndTopicDateCreated} from "./TopicView"
 import {Link} from "react-router-dom";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
+
 
 export default function TopicOverview({ user, topicOverview, limitReadText=true }) {
 	// console.log(user);
+
+	function handleDelete() {
+
+	}
+
+	function handleEdit() {
+
+	}
+
 	return <Paper
 		sx={{
 			p: 2,
@@ -25,11 +34,16 @@ export default function TopicOverview({ user, topicOverview, limitReadText=true 
 		<Grid container spacing={2}>
 			<Grid item>
 				<Box sx={{ width: 200, height: 128}}>
-					{/*<ThemeProvider theme={muiTheme}>*/}
-					{/*	<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]} />*/}
-					{/*</ThemeProvider>*/}
-				</Box>
+					<AudioPlayer
+						autoPlay={false}
+						showJumpControls={false}
+						customAdditionalControls={[]}
+						src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}
+						onPlay={e => console.log("onPlay")}
+						// other props here
+					/>
 				<LanguagesPreference topicOverview={topicOverview}/>
+				</Box>
 			</Grid>
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
@@ -60,6 +74,16 @@ export default function TopicOverview({ user, topicOverview, limitReadText=true 
 						<Typography variant="subtitle1" component="div">
 							$19.00
 						</Typography>
+						{
+							user["username"] === topicOverview["owner_username"] ?
+								<Box sx={{ marginLeft: 1 }}>
+									<Button onClick={handleDelete}>Delete</Button>
+									<Button onClick={handleEdit}>Edit</Button>
+								</Box>
+								:
+								<>
+								</>
+						}
 					</Box>
 				</Grid>
 			</Grid>
