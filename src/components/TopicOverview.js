@@ -9,17 +9,24 @@ import {TagLinks, LanguagesPreference, AuthorNameAndTopicDateCreated} from "./To
 import {Link} from "react-router-dom";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
+import api from "../services/api";
 
 
-export default function TopicOverview({ user, topicOverview, limitReadText=true }) {
+export default function TopicOverview({ user, topicOverview, setAreTopicsLoaded, limitReadText=true }) {
 	// console.log(user);
 
-	function handleDelete() {
-
+	function handleDelete(topicUniqId) {
+		api.deleteTopicByUniqIdTopics(user = {user}, topicUniqId)
+			.then(response => {
+				console.log({response: response});
+				if (response["status"] === "success") {
+					setAreTopicsLoaded(false);
+				}
+			});
 	}
 
 	function handleEdit() {
-
+		// TODO: implement
 	}
 
 	return <Paper
@@ -77,7 +84,7 @@ export default function TopicOverview({ user, topicOverview, limitReadText=true 
 						{
 							user["username"] === topicOverview["owner_username"] ?
 								<Box sx={{ marginLeft: 1 }}>
-									<Button onClick={handleDelete}>Delete</Button>
+									<Button onClick={() => handleDelete(topicOverview["topic_uniq_id"])}>Delete</Button>
 									<Button onClick={handleEdit}>Edit</Button>
 								</Box>
 								:

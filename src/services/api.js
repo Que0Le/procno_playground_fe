@@ -51,28 +51,10 @@ let api = {
                 body: JSON.stringify(topic),
             }
         ).then(response => response.json())
+            // TODO: check 201, verify, ...
             .then(data => {
                 return data;
             })
-        // ).then(response => {
-        //     if (response.status === 200) {
-        //         console.log({"r": response.json()["topic"]})
-        //         return {
-        //             status: "success",
-        //             topic: response.json()["topic"]
-        //         };
-        //     } else if (response.status === 400) {
-        //         return {
-        //             status: "failure",
-        //             message: "error!"
-        //         };
-        //     } else {
-        //         return {
-        //             status: "unknown",
-        //             message: "unknown"
-        //         };
-        //     }
-        // });
     },
 
     // TODO: filter, limit ...
@@ -83,6 +65,21 @@ let api = {
         return fetch(
             ENDPOINTS.getOwnTopics,
             {method: "GET", headers: headers}
+        ).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            return null;
+        })
+    },
+
+    deleteTopicByUniqIdTopics: (user, topicUniqId) => {
+        let headers = {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${user["access_token"]}`}
+        return fetch(
+            ENDPOINTS.deleteTopicByUniqId + topicUniqId,
+            {method: "DELETE", headers: headers}
         ).then(response => {
             if (response.status === 200) {
                 return response.json();

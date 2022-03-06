@@ -54,7 +54,7 @@ export default function Home({user, setUser}) {
 		{/*	</Grid>*/}
 		{/*</Box>*/}
 		<Box>
-			<TopicOverviewList user={user} topicOverviews={topics}/>
+			<TopicOverviewList user={user} topicOverviews={topics} setAreTopicsLoaded={setAreTopicsLoaded}/>
 		</Box>
 	</>;
 }
