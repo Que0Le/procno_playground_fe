@@ -105,6 +105,9 @@ export default function Navbar({user, setUser}) {
 				</NavLogo>
 				<Bars/>
 				<NavMenu>
+					<NavLink to="/testing" activeStyle={{color: "black"}}>
+						Testing
+					</NavLink>
 					<NavLink to="/dashboard" activeStyle={{color: "black"}}>
 						Dashboard
 					</NavLink>

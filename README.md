@@ -1,3 +1,29 @@
+# Procno note
+
+### Recording audio needs SSL
+https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#privacy_and_security
+Localhost is considered safe. Accessing from `192.168.1.15` for example, is not. 
+Use a reverse proxy i.e `nginx` to secure the source. Or better, run the web server with
+
+```bash
+HTTPS=true npm start
+```
+
+```
+getUserMedia() is a powerful feature which can only be used in secure contexts; 
+in insecure contexts, navigator.
+mediaDevices is undefined, preventing access to getUserMedia(). 
+A secure context is, in short, a page loaded using HTTPS or the file:/// URL scheme, 
+or a page loaded from localhost. 
+```
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

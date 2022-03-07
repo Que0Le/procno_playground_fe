@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Topic from "./pages/Topic";
 import CreateTopic from "./pages/CreateTopic";
+import Testing from "./pages/Testing";
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
 				<>
 					<Route exact path="/">
 						<Redirect to="/dashboard" />
+					</Route>
+					<Route path="/testing">
+						<Testing user={user}/>
 					</Route>
 					<Route path="/about">
 						<About user={user}/>
