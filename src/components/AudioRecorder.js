@@ -2,7 +2,7 @@ import React from "react";
 import {Recorder} from "react-voice-recorder"
 import "react-voice-recorder/dist/index.css"
 
-export default class Testing extends React.Component {
+export default class AudioRecorder extends React.Component {
 	constructor(props) {
 		super(props)
 

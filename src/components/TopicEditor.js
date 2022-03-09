@@ -3,6 +3,7 @@ import {Alert, Button, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import api from "../services/api";
 import useChangeRoute from "../hooks/useChangeRoute";
+import AudioRecorder from "./AudioRecorder";
 
 const labels = {
 	"title_input": "Topic title",
@@ -16,10 +17,58 @@ const labels = {
 
 export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNewTopic=true}) {
 	const [errorMessage, setErrorMessage] = useState("");
+	const [recordFile, setRecordFile] = useState(null);
 	const changeRoute = useChangeRoute();
+	// console.log(recordFile)
 
 	function handleSubmit() {
-		let newTopic = {}
+		// let newTopic = {}
+		// let inputValues = {
+		// 	"title_input": document.getElementById("title_input").value,
+		// 	"source_languages_input": document.getElementById("source_languages_input").value,
+		// 	"source_level_input": document.getElementById("source_level_input").value,
+		// 	"wish_languages_input": document.getElementById("wish_languages_input").value,
+		// 	"tags_input": document.getElementById("tags_input").value,
+		// 	"readtext_input": document.getElementById("readtext_input").value,
+		// 	"commentar_input": document.getElementById("commentar_input").value
+		// }
+		// let constructMessage = ""
+		// for (const [key, value] of Object.entries(inputValues)) {
+		// 	// console.log(`${key}: ${value}`);
+		// 	if (value === "") {
+		// 		constructMessage += labels[key] + ", ";
+		// 	}
+		// }
+		// if (constructMessage !== "") {
+		// 	setErrorMessage("No empty field allowed: " + constructMessage.substring(0, constructMessage.length - 2));
+		// 	return;
+		// }
+		//
+		// if (isNewTopic) {
+		// 	newTopic["topic_title"] = inputValues["title_input"]
+		// 	newTopic["source_language"] = inputValues["source_languages_input"]
+		// 	newTopic["source_level"] = inputValues["source_level_input"]
+		// 	newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
+		// 	newTopic["owner_username"] = user ? user["username"] : ""
+		// 	newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
+		// 	newTopic["tags"] = inputValues["tags_input"].split(",")
+		// 	newTopic["readtext"] = inputValues["readtext_input"]
+		// 	newTopic["record_filename"] = "__PLACE__HOLDER__"
+		// 	newTopic["commentar"] = inputValues["commentar_input"]
+		// } else {
+		// 	oldTopic["topic_title"] = inputValues["title_input"]
+		// 	oldTopic["source_language"] = inputValues["source_languages_input"]
+		// 	oldTopic["source_level"] = inputValues["source_level_input"]
+		// 	oldTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
+		// 	oldTopic["tags"] = inputValues["tags_input"].split(",")
+		// 	oldTopic["readtext"] = inputValues["readtext_input"]
+		// 	oldTopic["commentar"] = inputValues["commentar_input"]
+		// }
+		let newTopic = new FormData();
+		if (!recordFile) {
+			setErrorMessage("Record file is empty. Create one!");
+			return;
+		}
 		let inputValues = {
 			"title_input": document.getElementById("title_input").value,
 			"source_languages_input": document.getElementById("source_languages_input").value,
@@ -42,24 +91,37 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 		}
 
 		if (isNewTopic) {
-			newTopic["topic_title"] = inputValues["title_input"]
-			newTopic["source_language"] = inputValues["source_languages_input"]
-			newTopic["source_level"] = inputValues["source_level_input"]
-			newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
-			newTopic["owner_username"] = user ? user["username"] : ""
-			newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-			newTopic["tags"] = inputValues["tags_input"].split(",")
-			newTopic["readtext"] = inputValues["readtext_input"]
-			newTopic["record_filename"] = "__PLACE__HOLDER__"
-			newTopic["commentar"] = inputValues["commentar_input"]
+			newTopic.append("topic_title", inputValues["title_input"]);
+			newTopic.append("source_language", inputValues["source_languages_input"]);
+			newTopic.append("source_level", inputValues["source_level_input"]);
+			newTopic.append("source_language", inputValues["source_languages_input"]);
+			newTopic.append("owner_uniq_id", user ? user["uniq_id"] : "");
+			newTopic.append("owner_username", user ? user["username"] : "");
+			newTopic.append("source_language", inputValues["source_languages_input"]);
+			newTopic.append("wish_correct_languages", inputValues["wish_languages_input"]);
+			newTopic.append("tags", inputValues["tags_input"]);
+			newTopic.append("readtext", inputValues["readtext_input"]);
+			newTopic.append("record_filename", "__PLACE__HOLDER__");
+			newTopic.append("commentar", inputValues["commentar_input"]);
+			newTopic.append("file", recordFile);
+			// newTopic["topic_title"] = inputValues["title_input"]
+			// newTopic["source_language"] = inputValues["source_languages_input"]
+			// newTopic["source_level"] = inputValues["source_level_input"]
+			// newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
+			// newTopic["owner_username"] = user ? user["username"] : ""
+			// newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
+			// newTopic["tags"] = inputValues["tags_input"].split(",")
+			// newTopic["readtext"] = inputValues["readtext_input"]
+			// newTopic["record_filename"] = "__PLACE__HOLDER__"
+			// newTopic["commentar"] = inputValues["commentar_input"]
 		} else {
-			oldTopic["topic_title"] = inputValues["title_input"]
-			oldTopic["source_language"] = inputValues["source_languages_input"]
-			oldTopic["source_level"] = inputValues["source_level_input"]
-			oldTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-			oldTopic["tags"] = inputValues["tags_input"].split(",")
-			oldTopic["readtext"] = inputValues["readtext_input"]
-			oldTopic["commentar"] = inputValues["commentar_input"]
+			// oldTopic["topic_title"] = inputValues["title_input"]
+			// oldTopic["source_language"] = inputValues["source_languages_input"]
+			// oldTopic["source_level"] = inputValues["source_level_input"]
+			// oldTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
+			// oldTopic["tags"] = inputValues["tags_input"].split(",")
+			// oldTopic["readtext"] = inputValues["readtext_input"]
+			// oldTopic["commentar"] = inputValues["commentar_input"]
 		}
 		// setErrorMessage("");
 		// console.log(newTopic);
@@ -103,7 +165,7 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 					bgcolor: "background.paper", borderRadius: 1,
 				}}
 			>
-
+				<AudioRecorder setRecordFile={setRecordFile}/>
 				<TextField sx={{margin: 1}} id="title_input" label="Topic title" required={true}/>
 				<TextField sx={{margin: 1}} id="source_languages_input" label="Source language" required={true}/>
 				<TextField sx={{margin: 1}} id="source_level_input" label="Source language level" required={true}/>

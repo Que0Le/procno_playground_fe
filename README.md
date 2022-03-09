@@ -9,6 +9,74 @@ Use a reverse proxy i.e `nginx` to secure the source. Or better, run the web ser
 HTTPS=true npm start
 ```
 
+However, backend is not protected with SSL. The reverse proxy should work:
+
+```bash
+sudo apt install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo mkdir  /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/selfsigned.key -out /etc/nginx/ssl/selfsigned.cert
+
+#Country Name (2 letter code) [AU]:de
+#State or Province Name (full name) [Some-State]:berlin
+#Locality Name (eg, city) []:berlin
+#Organization Name (eg, company) [Internet Widgits Pty Ltd]:procno
+#Organizational Unit Name (eg, section) []:procno
+#Common Name (e.g. server FQDN or YOUR name) []:192.168.1.15
+#Email Address []:procno
+
+
+sudo gedit /etc/nginx/sites-enabled/procno_15.conf
+
+sudo systemctl reload nginx
+```
+
+
+```c
+server {
+    listen 3001 ssl ;
+    server_name 192.168.1.15;
+    access_log  /var/log/nginx/procno_15.access.log;
+    error_log   /var/log/nginx/procno_15.error.log;
+    ssl_certificate             /etc/nginx/ssl/selfsigned.cert;
+    ssl_certificate_key         /etc/nginx/ssl/selfsigned.key;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_buffering off;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Referer "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_http_version 1.1;
+    }
+}
+
+server {
+    listen 8889 ssl;
+    server_name 192.168.1.15;
+    access_log  /var/log/nginx/procno_15.access.log;
+    error_log   /var/log/nginx/procno_15.error.log;
+    ssl_certificate             /etc/nginx/ssl/selfsigned.cert;
+    ssl_certificate_key         /etc/nginx/ssl/selfsigned.key;
+    location / {
+        proxy_pass http://127.0.0.1:8888;
+        proxy_buffering off;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Referer "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_http_version 1.1;
+    }
+}
+```
+
+
 ```
 getUserMedia() is a powerful feature which can only be used in secure contexts; 
 in insecure contexts, navigator.

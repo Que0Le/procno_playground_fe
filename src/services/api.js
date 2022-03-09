@@ -36,11 +36,32 @@ let api = {
         });
     },
 
+    // sendTopicToServer: (user, isNewTopic, topic) => {
+    //     let token = (user["user"]["access_token"])
+    //     // console.log(topic)
+    //     let headers = {
+    //         "Content-type": "application/json",
+    //         "Authorization": `Bearer ${token}`
+    //     }
+    //     return fetch(
+    //         ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
+    //         {
+    //             method: isNewTopic ? "POST" : "PUT",
+    //             headers: headers,
+    //             body: JSON.stringify(topic),
+    //         }
+    //     ).then(response => response.json())
+    //         // TODO: check 201, verify, ...
+    //         .then(data => {
+    //             return data;
+    //         })
+    // },
+
     sendTopicToServer: (user, isNewTopic, topic) => {
         let token = (user["user"]["access_token"])
         // console.log(topic)
         let headers = {
-            "Content-type": "application/json",
+            // "Content-type": "application/json",
             "Authorization": `Bearer ${token}`
         }
         return fetch(
@@ -48,7 +69,7 @@ let api = {
             {
                 method: isNewTopic ? "POST" : "PUT",
                 headers: headers,
-                body: JSON.stringify(topic),
+                body: topic,
             }
         ).then(response => response.json())
             // TODO: check 201, verify, ...
