@@ -82,14 +82,16 @@ export default function TopicOverview({ user, topicOverview, setAreTopicsLoaded,
 							$19.00
 						</Typography>
 						{
-							user["username"] === topicOverview["owner_username"] ?
-								<Box sx={{ marginLeft: 1 }}>
-									<Button onClick={() => handleDelete(topicOverview["topic_uniq_id"])}>Delete</Button>
-									<Button onClick={handleEdit}>Edit</Button>
-								</Box>
-								:
-								<>
+							user && user["username"] === topicOverview["owner_username"]
+								? <>
+									<Box sx={{ marginLeft: 1 }}>
+										<Button onClick={() => handleDelete(topicOverview["topic_uniq_id"])}>Delete</Button>
+									</Box>
+									<Box>
+										<Button onClick={handleEdit}>Edit</Button>
+									</Box>
 								</>
+								: <></>
 						}
 					</Box>
 				</Grid>

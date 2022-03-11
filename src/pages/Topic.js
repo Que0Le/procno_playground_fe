@@ -45,22 +45,24 @@ export default function Topic({user}) {
 		<Box>
 			{
 				currentTopic
-					?
-					<TopicView topicOverview={currentTopic} limitReadText={false}/>
-					:
-					<></>
-			}
-		</Box>
-		<Box>
-			{
-				currentTopic && currentAnswers.length > 0
-					?
-					<>
-						<AnswerViewList answers={currentAnswers}/>
+					? <>
+						<Box>
+							<TopicView user={user} topicOverview={currentTopic}/>
+						</Box>
+						<Box>
+							----------------------
+						</Box>
+						<Box>
+							{
+								currentAnswers.length > 0
+									? <>
+										<AnswerViewList answers={currentAnswers}/>
+									</>
+									: <></>
+							}
+						</Box>
 					</>
-					:
-					<>
-					</>
+					: <></>
 			}
 		</Box>
 	</>;

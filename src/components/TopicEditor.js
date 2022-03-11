@@ -166,12 +166,12 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 				}}
 			>
 				<AudioRecorder setRecordFile={setRecordFile}/>
+				<TextField sx={{margin: 1}} id="readtext_input" label="Read text" multiline minRows={2} maxRows={10} required={true}/>
 				<TextField sx={{margin: 1}} id="title_input" label="Topic title" required={true}/>
 				<TextField sx={{margin: 1}} id="source_languages_input" label="Source language" required={true}/>
 				<TextField sx={{margin: 1}} id="source_level_input" label="Source language level" required={true}/>
 				<TextField sx={{margin: 1}} id="wish_languages_input" label="Wish languages" required={true}/>
 				<TextField sx={{margin: 1}} id="tags_input" label="Tags" required={true}/>
-				<TextField sx={{margin: 1}} id="readtext_input" label="Read text" multiline minRows={1} maxRows={10} required={true}/>
 				<TextField sx={{margin: 1}} id="commentar_input" label="Commentar" required={true}/>
 			</Box>
 			{errorMessage ? <Alert severity="error"> {errorMessage} </Alert> : <></>}

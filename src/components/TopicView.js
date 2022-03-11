@@ -1,4 +1,4 @@
-import {Grid} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 // import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -8,6 +8,8 @@ import {ENDPOINTS} from "../utils/config";
 import {limitXLines} from "../utils/customStyles";
 import {Link} from "react-router-dom";
 import AudioPlayer from "react-h5-audio-player";
+import api from "../services/api";
+import useChangeRoute from "../hooks/useChangeRoute";
 
 const preventDefault = (event) => event.preventDefault()
 
@@ -92,8 +94,23 @@ export function LanguagesPreference({topicOverview}) {
 	</div>
 }
 
-export default function TopicView({user, topicOverview, limitReadText = true}) {
-	// console.log(topicOverview);
+export default function TopicView({user = null, topicOverview}) {
+	const changeRoute = useChangeRoute();
+
+	function handleDelete(topicUniqId) {
+		api.deleteTopicByUniqIdTopics(user = {user}, topicUniqId)
+			.then(response => {
+				console.log({response: response});
+				if (response["status"] === "success") {
+					changeRoute("/home");
+				}
+			});
+	}
+
+	function handleEdit() {
+		// TODO: implement
+	}
+
 	return <Paper
 		sx={{
 			p: 2,
@@ -103,36 +120,45 @@ export default function TopicView({user, topicOverview, limitReadText = true}) {
 			backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1A2027" : "#fff",
 		}}
 	>
-		<Box sx={{width: "100%", height: 66}}>
-			<AudioPlayer
-				autoPlay={false}
-				showJumpControls={false}
-				customAdditionalControls={[]}
-				src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}
-				onPlay={e => console.log("onPlay")}
-				// other props here
-			/>
-		</Box>
 		<Grid container spacing={2}>
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
 					<Grid item xs>
-						<Link to={{pathname: "/topic/" + topicOverview["topic_uniq_id"], state: {user: user}}}>
-							<Typography>
-								{topicOverview["topic_title"]}
-							</Typography>
-						</Link>
-						<AuthorNameAndTopicDateCreated topicOverview={topicOverview}/>
+						<Grid item>
+							<Link to={{pathname: "/topic/" + topicOverview["topic_uniq_id"], state: {user: user}}}>
+								<Typography>
+									{topicOverview["topic_title"]}
+								</Typography>
+							</Link>
+						</Grid>
+						<Grid item>
+							<AuthorNameAndTopicDateCreated topicOverview={topicOverview}/>
+						</Grid>
 						<Grid item>
 							<LanguagesPreference topicOverview={topicOverview}/>
 						</Grid>
-						<Typography sx={{...(limitReadText ? limitXLines(3) : {}), fontStyle: "italic"}} variant="body2"
-									gutterBottom>
-							{topicOverview["readtext"]}
-						</Typography>
-						<Typography sx={{...limitXLines(3)}} variant="body2" color="text.secondary">
-							{topicOverview["commentar"]}
-						</Typography>
+						<Grid item>
+							<Typography sx={{fontStyle: "italic"}} variant="body2" gutterBottom>
+								{topicOverview["readtext"]}
+							</Typography>
+						</Grid>
+						<Grid item>
+							<Box>
+								<AudioPlayer
+									autoPlay={false}
+									showJumpControls={false}
+									customAdditionalControls={[]}
+									src={ENDPOINTS.getAudioRecordByFileName + topicOverview["record_filename"]}
+									onPlay={e => console.log("onPlay")}
+									// other props here
+								/>
+							</Box>
+						</Grid>
+						<Grid item>
+							<Typography sx={{...limitXLines(3)}} variant="body2" color="text.secondary">
+								{topicOverview["commentar"]}
+							</Typography>
+						</Grid>
 					</Grid>
 					<Grid item>
 						<TagLinks tags={topicOverview["tag_and_uniq_id_s"]}/>
@@ -146,6 +172,18 @@ export default function TopicView({user, topicOverview, limitReadText = true}) {
 						<Typography variant="subtitle1" component="div">
 							$19.00
 						</Typography>
+						{
+							user && user["username"] === topicOverview["owner_username"]
+								? <>
+									<Box sx={{ marginLeft: 1 }}>
+										<Button onClick={() => handleDelete(topicOverview["topic_uniq_id"])}>Delete</Button>
+									</Box>
+									<Box>
+										<Button onClick={handleEdit}>Edit</Button>
+									</Box>
+								</>
+								: <></>
+						}
 					</Box>
 				</Grid>
 			</Grid>
