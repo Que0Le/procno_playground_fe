@@ -10,11 +10,14 @@ let api = {
      * @returns {}
      */
     login: (email, password) => {
+        // let headers = {
+        //     "credentials": "include"
+        // }
         let formData = new FormData();
         formData.append("username", email);  // yes, username but the content is email
         formData.append("password", password);
         return fetch(
-            ENDPOINTS.login,
+            ENDPOINTS.accessToken,
             {method: "POST", body: formData}
         ).then(response => {
             if (response.status === 200) {
@@ -82,10 +85,12 @@ let api = {
     getOwnerTopics: (user) => {
         let headers = {
             "Content-type": "application/json",
-            "Authorization": `Bearer ${user["access_token"]}`}
+            // "credentials": "include"
+            // "Authorization": `Bearer ${user["access_token"]}`
+        }
         return fetch(
             ENDPOINTS.getOwnTopics,
-            {method: "GET", headers: headers}
+            {method: "GET", headers: headers, credentials: "include"}
         ).then(response => {
             if (response.status === 200) {
                 return response.json();
