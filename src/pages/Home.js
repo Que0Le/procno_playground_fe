@@ -1,28 +1,32 @@
 import React, {useEffect, useState} from "react";
+import Box from "@mui/material/Box";
+
 import TopicOverviewList from "../components/TopicOverviewList";
 import api from "../services/api";
 import useChangeRoute from "../hooks/useChangeRoute";
-import Box from "@mui/material/Box";
-import {Grid} from "@mui/material";
-import Paper from "@mui/material/Paper";
+import {getUserFromLocalStorage} from "../utils/helpers";
 
-export default function Home({user, setUser}) {
+export default function Home() {
+	const [user, setUser] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(null);
 	const [topics, setTopics] = useState([]);
 	const [areTopicsLoaded, setAreTopicsLoaded] = useState(false);
 	const changeRoute = useChangeRoute();
 
-	if (!user) changeRoute("/dashboard");
-	// console.log(user)
 	useEffect(() => {
-		if (!user) {
-			changeRoute("/dashboard");
-			return;
+		if (!isLoaded || !user) {
+			setUser(getUserFromLocalStorage());
+			setIsLoaded(true);
+
+			if (!user && isLoaded) {
+				changeRoute("/dashboard");
+				return;
+			}
 		}
 		if (areTopicsLoaded) return;
 		api.getOwnerTopics(user)
 			.then(topics => {
 				if (topics) {
-					// console.log(topics);
 					setTopics(topics);
 					setAreTopicsLoaded(true);
 				}

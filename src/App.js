@@ -40,7 +40,7 @@ function App() {
 						<About user={user}/>
 					</Route>
 					<Route path="/home">
-						<Home user={user}/>
+						<Home/>
 					</Route>
 					<Route path="/topic/:topicUniqId">
 						<Topic user={user}/>
@@ -52,7 +52,7 @@ function App() {
 						<Dashboard user={user}/>
 					</Route>
 					<Route path="/login">
-						<Login user={user} setUser={setUser}/>
+						<Login setUser={setUser}/>
 					</Route>
 					<Route path="/signup">
 						<Signup user={user} setUser={setUser}/>

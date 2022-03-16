@@ -1,5 +1,7 @@
 import "../utils/config"
+import "../utils/helpers"
 import {ENDPOINTS} from "../utils/config";
+import {storeUserInLocalStorage} from "../utils/helpers";
 
 
 let api = {
@@ -10,32 +12,25 @@ let api = {
      * @returns {}
      */
     login: (email, password) => {
-        // let headers = {
-        //     "credentials": "include"
-        // }
         let formData = new FormData();
         formData.append("username", email);  // yes, username but the content is email
         formData.append("password", password);
         return fetch(
             ENDPOINTS.accessToken,
-            {method: "POST", body: formData}
+            {method: "POST", body: formData, credentials: "include"}
         ).then(response => {
-            if (response.status === 200) {
-                return {
-                    status: "success",
-                    user: response.json()
-                };
-            } else if (response.status === 400) {
-                return {
-                    status: "failure",
-                    message: "Email or password was not correct!"
-                };
-            } else {
-                return {
-                    status: "unknown",
-                    message: "unknown"
-                };
-            }
+            return new Promise((resolve, reject) => {
+                if (response.status !== 200) {
+                    // TODO: process server message
+                    response.clone().json().then(payload => reject(payload["detail"]))
+                }
+                response.clone().json()
+                    .then(payload => {
+                        delete payload["access_token"]
+                        storeUserInLocalStorage(payload)
+                        resolve(payload);
+                    })
+            })
         });
     },
 
@@ -65,7 +60,7 @@ let api = {
         // console.log(topic)
         let headers = {
             // "Content-type": "application/json",
-            "Authorization": `Bearer ${token}`
+            // "Authorization": `Bearer ${token}`
         }
         return fetch(
             ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
@@ -73,6 +68,7 @@ let api = {
                 method: isNewTopic ? "POST" : "PUT",
                 headers: headers,
                 body: topic,
+                credentials: "include"
             }
         ).then(response => response.json())
             // TODO: check 201, verify, ...

@@ -1,10 +1,13 @@
 // https://dev.to/stephanieopala/simple-navigation-bar-in-react-js-4d5m
 
-import React from "react";
+import React, {useEffect, useState} from "react"
 import {FaBars} from "react-icons/fa";
 import {NavLink as Link} from "react-router-dom";
 import styled from "styled-components";
 // import {Button} from "@mui/material";
+import {
+	getUserFromLocalStorage, removeUserFromLocalStorage
+} from "../utils/helpers";
 
 export const Nav = styled.nav`
   background: orangered;
@@ -91,77 +94,71 @@ export const NavMenu = styled.div`
 //   }
 // `;
 
-export default function Navbar({user, setUser}) {
+export default function Navbar() {
+	const [user, setUser] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(null);
 
 	function handleLogoutButton() {
+		removeUserFromLocalStorage();
 		setUser(null);
+		setIsLoaded(false);
 	}
 
-	return (
-		<>
-			<Nav>
-				<NavLogo to="/dashboard">
-					Logo
-				</NavLogo>
-				<Bars/>
-				<NavMenu>
-					<NavLink to="/testing" activeStyle={{color: "black"}}>
-						Testing
-					</NavLink>
-					<NavLink to="/dashboard" activeStyle={{color: "black"}}>
-						Dashboard
-					</NavLink>
-					{
-						user
-							?
-							<>
-								<NavLink to="/home" activeStyle={{color: "black"}}>
-									Home
-								</NavLink>
-								<NavLink to="/create-topic" activeStyle={{color: "black"}}>
-									Create topic
-								</NavLink>
-							</>
-							:
-							<>
-								{/*<NavLink to="/create-topic" activeStyle={{color: "black"}}>*/}
-								{/*	Create topic*/}
-								{/*</NavLink>*/}
-							</>
-					}
+	useEffect(() => {
+		if (!isLoaded || !user) {
+			setUser(getUserFromLocalStorage());
+			setIsLoaded(true);
+		}
+	})
 
-					<NavLink to="/about" activeStyle={{color: "black"}}>
-						About
-					</NavLink>
-					{
-						user
-							?
-							<>
-								{/*<NavLink to="/login" activeStyle={{color: "black"}}>*/}
-								{/*	Log in*/}
-								{/*</NavLink>*/}
-								{/*<NavLink to="/signup" activeStyle={{color: "black"}}>*/}
-								{/*	Sign up*/}
-								{/*</NavLink>*/}
-								<NavLink to="/" onClick={handleLogoutButton}>
-									Logout
-								</NavLink>
-							</>
-							:
-							<>
-								<NavLink to="/login" activeStyle={{color: "black"}}>
-									Log in
-								</NavLink>
-								<NavLink to="/signup" activeStyle={{color: "black"}}>
-									Sign up
-								</NavLink>
-								{/*<NavLink to="/" onClick={handleLogoutButton}>*/}
-								{/*	Logout*/}
-								{/*</NavLink>*/}
-							</>
-					}
-				</NavMenu>
-			</Nav>
-		</>
+	return (
+		<Nav>
+			<NavLogo to="/dashboard">
+				Logo
+			</NavLogo>
+			<Bars/>
+			<NavMenu>
+				<NavLink to="/testing" activeStyle={{color: "black"}}>
+					Testing
+				</NavLink>
+				<NavLink to="/dashboard" activeStyle={{color: "black"}}>
+					Dashboard
+				</NavLink>
+				{
+					user ?
+					<>
+						<NavLink to="/home" activeStyle={{color: "black"}}>
+							Home
+						</NavLink>
+						<NavLink to="/create-topic" activeStyle={{color: "black"}}>
+							Create topic
+						</NavLink>
+					</>
+					:
+					<></>
+				}
+
+				<NavLink to="/about" activeStyle={{color: "black"}}>
+					About
+				</NavLink>
+				{
+					user ?
+					<>
+						<NavLink to="/" onClick={handleLogoutButton}>
+							Logout
+						</NavLink>
+					</>
+					:
+					<>
+						<NavLink to="/login" activeStyle={{color: "black"}}>
+							Log in
+						</NavLink>
+						<NavLink to="/signup" activeStyle={{color: "black"}}>
+							Sign up
+						</NavLink>
+					</>
+				}
+			</NavMenu>
+		</Nav>
 	);
 }

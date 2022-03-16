@@ -3,10 +3,11 @@ import {Alert, Button, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import api from "../services/api";
 import useChangeRoute from "../hooks/useChangeRoute";
+import {getUserFromLocalStorage} from "../utils/helpers";
 
 export default function Login({user, setUser}) {
+	const [user1, setUser1] = useState(null);
 	const [errorMessage, setErrorMessage] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const changeRoute = useChangeRoute();
 
 	function handleSubmit() {
@@ -14,16 +15,13 @@ export default function Login({user, setUser}) {
 			document.getElementById("email_input").value,
 			document.getElementById("password_input").value
 		)
-			.then(response => {
-				if (response["status"] === "success") {
-					// TODO: this looks funny. Might need to fix this and api
-					response["user"].then(user => setUser(user));
-					setErrorMessage("");
-					setIsLoggedIn(true);
-					changeRoute("/dashboard");
-				} else {
-					setErrorMessage(response["message"])
-				}
+			.then(user => {
+				setUser(user)
+				setErrorMessage("");
+				changeRoute("/dashboard");
+			})
+			.catch(message => {
+				setErrorMessage(message);
 			});
 	}
 
@@ -32,9 +30,13 @@ export default function Login({user, setUser}) {
 		document.getElementById("password_input").value = "";
 	}
 
-	// useEffect(() => {
-	//
-	// })
+	useEffect(() => {
+		setUser1(getUserFromLocalStorage());
+		if (user1) {
+			console.log(user1)
+			changeRoute("/dashboard");
+		}
+	})
 	return (
 		<div>
 			<h1>Login with email and password</h1>
