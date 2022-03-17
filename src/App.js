@@ -34,25 +34,25 @@ function App() {
 						<Redirect to="/dashboard" />
 					</Route>
 					<Route path="/testing">
-						<Testing user={user}/>
+						<Testing user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/about">
-						<About user={user}/>
+						<About user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/home">
-						<Home/>
+						<Home user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/topic/:topicUniqId">
-						<Topic user={user}/>
+						<Topic user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/create-topic">
-						<CreateTopic user={user}/>
+						<CreateTopic user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/dashboard">
-						<Dashboard user={user}/>
+						<Dashboard user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/login">
-						<Login setUser={setUser}/>
+						<Login user={user} setUser={setUser}/>
 					</Route>
 					<Route path="/signup">
 						<Signup user={user} setUser={setUser}/>

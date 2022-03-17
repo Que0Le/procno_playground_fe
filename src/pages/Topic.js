@@ -2,25 +2,28 @@ import React, {useEffect, useState} from "react";
 import api from "../services/api";
 import Box from "@mui/material/Box";
 import {useParams} from "react-router-dom";
-// import TopicOverview from "../components/TopicOverview";
 import AnswerViewList from "../components/AnswerViewList";
 import TopicView from "../components/TopicView";
+import {getUserFromLocalStorage} from "../utils/helpers";
 
-export default function Topic({user}) {
-
+export default function Topic() {
+	const [user, setUser] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(null);
 	const [isTopicLoaded, setIsTopicLoaded] = useState(false);
 	const [currentTopic, setCurrentTopic] = useState(null);
 	const [areAnswersLoaded, setAreAnswersLoaded] = useState(false);
 	const [currentAnswers, setCurrentAnswers] = useState([]);
-	// const changeRoute = useChangeRoute();
 
 	const {topicUniqId} = useParams()
 	useEffect(() => {
+		if (!isLoaded || !user) {
+			setUser(getUserFromLocalStorage());
+			setIsLoaded(true);
+		}
 		if (!isTopicLoaded) {
 			api.getTopicByUniqID(topicUniqId)
 				.then(topic => {
 					if (topic) {
-						// console.log(topic);
 						setCurrentTopic(topic);
 						setIsTopicLoaded(true);
 					}
@@ -30,7 +33,6 @@ export default function Topic({user}) {
 			api.getAnswersForTopicByTopicUniqID(topicUniqId)
 				.then(answers => {
 					if (answers) {
-						// console.log(answers);
 						setCurrentAnswers(answers);
 						setAreAnswersLoaded(true);
 					}
@@ -44,8 +46,8 @@ export default function Topic({user}) {
 		</Box>
 		<Box>
 			{
-				currentTopic
-					? <>
+				currentTopic ?
+					<>
 						<Box>
 							<TopicView user={user} topicOverview={currentTopic}/>
 						</Box>
@@ -54,8 +56,8 @@ export default function Topic({user}) {
 						</Box>
 						<Box>
 							{
-								currentAnswers.length > 0
-									? <>
+								currentAnswers.length > 0 ?
+									<>
 										<AnswerViewList answers={currentAnswers}/>
 									</>
 									: <></>

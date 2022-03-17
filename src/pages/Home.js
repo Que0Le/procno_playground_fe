@@ -6,8 +6,7 @@ import api from "../services/api";
 import useChangeRoute from "../hooks/useChangeRoute";
 import {getUserFromLocalStorage} from "../utils/helpers";
 
-export default function Home() {
-	const [user, setUser] = useState(null);
+export default function Home({user, setUser}) {
 	const [isLoaded, setIsLoaded] = useState(null);
 	const [topics, setTopics] = useState([]);
 	const [areTopicsLoaded, setAreTopicsLoaded] = useState(false);
@@ -17,20 +16,19 @@ export default function Home() {
 		if (!isLoaded || !user) {
 			setUser(getUserFromLocalStorage());
 			setIsLoaded(true);
-
-			if (!user && isLoaded) {
-				changeRoute("/dashboard");
-				return;
-			}
 		}
-		if (areTopicsLoaded) return;
-		api.getOwnerTopics(user)
-			.then(topics => {
-				if (topics) {
-					setTopics(topics);
-					setAreTopicsLoaded(true);
-				}
-			});
+		if (!user && isLoaded) {
+			changeRoute("/dashboard");
+		}
+		if (!areTopicsLoaded) {
+			api.getOwnerTopics(user)
+				.then(topics => {
+					if (topics) {
+						setTopics(topics);
+						setAreTopicsLoaded(true);
+					}
+				});
+		}
 	});
 
 	return <>

@@ -94,8 +94,7 @@ export const NavMenu = styled.div`
 //   }
 // `;
 
-export default function Navbar() {
-	const [user, setUser] = useState(null);
+export default function Navbar({user, setUser}) {
 	const [isLoaded, setIsLoaded] = useState(null);
 
 	function handleLogoutButton() {
@@ -126,16 +125,16 @@ export default function Navbar() {
 				</NavLink>
 				{
 					user ?
-					<>
-						<NavLink to="/home" activeStyle={{color: "black"}}>
-							Home
-						</NavLink>
-						<NavLink to="/create-topic" activeStyle={{color: "black"}}>
-							Create topic
-						</NavLink>
-					</>
-					:
-					<></>
+						<>
+							<NavLink to="/home" activeStyle={{color: "black"}}>
+								Home
+							</NavLink>
+							<NavLink to="/create-topic" activeStyle={{color: "black"}}>
+								Create topic
+							</NavLink>
+						</>
+						:
+						<></>
 				}
 
 				<NavLink to="/about" activeStyle={{color: "black"}}>
@@ -143,20 +142,20 @@ export default function Navbar() {
 				</NavLink>
 				{
 					user ?
-					<>
-						<NavLink to="/" onClick={handleLogoutButton}>
-							Logout
-						</NavLink>
-					</>
-					:
-					<>
-						<NavLink to="/login" activeStyle={{color: "black"}}>
-							Log in
-						</NavLink>
-						<NavLink to="/signup" activeStyle={{color: "black"}}>
-							Sign up
-						</NavLink>
-					</>
+						<>
+							<NavLink to="/" onClick={handleLogoutButton}>
+								Logout
+							</NavLink>
+						</>
+						:
+						<>
+							<NavLink to="/login" activeStyle={{color: "black"}}>
+								Log in
+							</NavLink>
+							<NavLink to="/signup" activeStyle={{color: "black"}}>
+								Sign up
+							</NavLink>
+						</>
 				}
 			</NavMenu>
 		</Nav>

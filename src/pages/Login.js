@@ -6,7 +6,7 @@ import useChangeRoute from "../hooks/useChangeRoute";
 import {getUserFromLocalStorage} from "../utils/helpers";
 
 export default function Login({user, setUser}) {
-	const [user1, setUser1] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(null);
 	const [errorMessage, setErrorMessage] = useState("");
 	const changeRoute = useChangeRoute();
 
@@ -31,9 +31,11 @@ export default function Login({user, setUser}) {
 	}
 
 	useEffect(() => {
-		setUser1(getUserFromLocalStorage());
-		if (user1) {
-			console.log(user1)
+		if (!isLoaded || !user) {
+			setUser(getUserFromLocalStorage());
+			setIsLoaded(true);
+		}
+		if (user && isLoaded) {
 			changeRoute("/dashboard");
 		}
 	})
