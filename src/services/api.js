@@ -34,6 +34,20 @@ let api = {
         });
     },
 
+    logout: () => {
+        return fetch(
+            ENDPOINTS.accessToken,
+            {method: "DELETE", credentials: "include"}
+        ).then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.status !== 200) {
+                    response.clone().json().then(payload => reject(payload["detail"]));
+                }
+                resolve();
+            })
+        });
+    },
+
     // sendTopicToServer: (user, isNewTopic, topic) => {
     //     let token = (user["user"]["access_token"])
     //     // console.log(topic)

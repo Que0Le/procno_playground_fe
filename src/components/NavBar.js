@@ -8,6 +8,7 @@ import styled from "styled-components";
 import {
 	getUserFromLocalStorage, removeUserFromLocalStorage
 } from "../utils/helpers";
+import api from "../services/api";
 
 export const Nav = styled.nav`
   background: orangered;
@@ -98,9 +99,11 @@ export default function Navbar({user, setUser}) {
 	const [isLoaded, setIsLoaded] = useState(null);
 
 	function handleLogoutButton() {
-		removeUserFromLocalStorage();
-		setUser(null);
-		setIsLoaded(false);
+		api.logout().then(r => {
+			removeUserFromLocalStorage();
+			setUser(null);
+			setIsLoaded(false);
+		});
 	}
 
 	useEffect(() => {
