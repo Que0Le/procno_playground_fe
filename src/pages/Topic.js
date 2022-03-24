@@ -15,6 +15,7 @@ export default function Topic() {
 	const [currentAnswers, setCurrentAnswers] = useState([]);
 
 	const {topicUniqId} = useParams()
+
 	useEffect(() => {
 		if (!isLoaded || !user) {
 			setUser(getUserFromLocalStorage());

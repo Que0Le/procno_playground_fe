@@ -81,16 +81,16 @@ export default function AnswerView({ answer }) {
 					{/*	<TagLinks tags={topicOverview["tag_and_uniq_id_s"]} />*/}
 					{/*</Grid>*/}
 				</Grid>
-				{/*<Grid item>*/}
-				{/*	<Box sx={{ marginLeft: 1 }}>*/}
-				{/*		<Typography variant="subtitle1" component="div">*/}
-				{/*			{topicOverview["nbr_answer"] + " answers"}*/}
-				{/*		</Typography>*/}
-				{/*		<Typography variant="subtitle1" component="div">*/}
-				{/*			$19.00*/}
-				{/*		</Typography>*/}
-				{/*	</Box>*/}
-				{/*</Grid>*/}
+				<Grid item>
+					<Box sx={{ marginLeft: 1 }}>
+						<Typography variant="subtitle1" component="div">
+							{answer["answer_uniq_id"] + " answers"}
+						</Typography>
+						<Typography variant="subtitle1" component="div">
+							$19.00
+						</Typography>
+					</Box>
+				</Grid>
 			</Grid>
 		</Grid>
 	</Paper>;
