@@ -1,5 +1,5 @@
 
-const BASE_API = "http://192.168.1.15:8888/api/v1";
+const BASE_API = "https://192.168.1.15:8888/api/v1";
 
 export const ENDPOINTS = {
     base: process.env.BASE_API || BASE_API,

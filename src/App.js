@@ -1,10 +1,5 @@
-// import logo from "./logo.svg";
 import "./App.css";
-import React, {useEffect, useState} from "react";
-// import { Route, BrowserRouter as Router } from "react-router-dom";
-// import api from "./services/api";
-// import {Button} from "@mui/material";
-// import { Link as RRDLink} from "react-router-dom";
+import React, {useState} from "react";
 import {Route, BrowserRouter as Router, Redirect} from "react-router-dom";
 
 import About from "./pages/About";

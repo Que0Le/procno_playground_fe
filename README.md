@@ -6,8 +6,13 @@ Localhost is considered safe. Accessing from `192.168.1.15` for example, is not.
 Use a reverse proxy i.e `nginx` to secure the source. Or better, run the web server with
 
 ```bash
-HTTPS=true npm start
+#
+#  create cert: ./mkcert-v1.4.3-linux-amd64 localhost 127.0.0.1 192.168.1.15
+HTTPS=true SSL_CRT_FILE=../localhost+2.pem SSL_KEY_FILE=../localhost+2-key.pem npm start
 ```
+
+And open the browser to trust the certificate for each port: FE 3000, BE 8888
+https://192.168.1.15:8888/api/v1/topics/own-topics/
 
 However, backend is not protected with SSL. The reverse proxy should work:
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {Recorder} from "react-voice-recorder"
 import "react-voice-recorder/dist/index.css"
+import {ChakraProvider, Grid, Image} from "@chakra-ui/react";
 
 export default class Testing extends React.Component {
 	constructor(props) {
@@ -55,17 +56,28 @@ export default class Testing extends React.Component {
 
 	render() {
 		return (
-			<Recorder
-				record={true}
-				title={"New recording"}
-				audioURL={this.state.audioDetails.url}
-				showUIAudio
-				handleAudioStop={data => this.handleAudioStop(data)}
-				handleAudioUpload={data => this.handleAudioUpload(data)}
-				handleCountDown={data => this.handleCountDown(data)}
-				handleReset={() => this.handleReset()}
-				mimeTypeToUseWhenRecording={"audio/webm"} // For specific mimetype.
-			/>
+			<ChakraProvider resetCSS>
+				<Grid templateColumns="repeat(2, 1fr)" gap={2}>
+					<Image
+						width="40000px"
+						src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+						overflow="visible"
+						backgroundColor="green.500"
+					/>
+					<Image height="100px" width="100px" backgroundColor="green.500" />
+				</Grid>
+				<Recorder
+					record={true}
+					title={"New recording"}
+					audioURL={this.state.audioDetails.url}
+					showUIAudio
+					handleAudioStop={data => this.handleAudioStop(data)}
+					handleAudioUpload={data => this.handleAudioUpload(data)}
+					handleCountDown={data => this.handleCountDown(data)}
+					handleReset={() => this.handleReset()}
+					mimeTypeToUseWhenRecording={"audio/webm"} // For specific mimetype.
+				/>
+			</ChakraProvider>
 		)
 	}
 }

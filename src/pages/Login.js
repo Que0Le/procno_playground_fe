@@ -21,7 +21,11 @@ export default function Login({user, setUser}) {
 				changeRoute("/dashboard");
 			})
 			.catch(message => {
-				setErrorMessage(message);
+				if (typeof message === "string") {
+					setErrorMessage(message);
+				} else {
+					setErrorMessage("Something wrong");
+				}
 			});
 	}
 
