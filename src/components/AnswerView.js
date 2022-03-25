@@ -1,4 +1,4 @@
-import {Grid, Link} from "@mui/material";
+import {Button, Grid, Link} from "@mui/material";
 // import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -6,15 +6,17 @@ import React from "react";
 // import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import {ENDPOINTS} from "../utils/config";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import {createTheme, ThemeProvider} from "@material-ui/core";
 // import AudioPlayer from "material-ui-audio-player";
 import {limitXLines} from "../utils/customStyles";
+import api from "../services/api";
+
 const muiTheme = createTheme({});
 
 const preventDefault = (event) => event.preventDefault()
 
 
-function AuthorNameAndAnswerDateCreated({ answer }) {
+function AuthorNameAndAnswerDateCreated({answer}) {
 	const dateObject = new Date(answer["answer_created_at"]);
 	let topicDateCreated = dateObject.getDate() + "/" + dateObject.getMonth() + "/" + dateObject.getFullYear()
 	return <div>
@@ -41,8 +43,20 @@ function AuthorNameAndAnswerDateCreated({ answer }) {
 	</div>
 }
 
-export default function AnswerView({ answer }) {
-	// console.log(topicOverview);
+export default function AnswerView({user, answer, setAreAnswersLoaded}) {
+
+	function handleDelete(answerUniqId) {
+		api.deleteAnswerByUniqId(answerUniqId)
+			.then(response => {
+				if (response["status"] === "success") {
+					setAreAnswersLoaded(false);
+				}
+			});
+	}
+
+	function handleEdit() {
+	}
+
 	return <Paper
 		sx={{
 			p: 2,
@@ -54,7 +68,7 @@ export default function AnswerView({ answer }) {
 	>
 		<Grid container spacing={2}>
 			<Grid item>
-				<Box sx={{ width: 200, height: 128}}>
+				<Box sx={{width: 200, height: 128}}>
 					{/*<ThemeProvider theme={muiTheme}>*/}
 					{/*	<AudioPlayer src={ENDPOINTS.getAudioRecordByFileName + answer["record_filename"]} />*/}
 					{/*</ThemeProvider>*/}
@@ -82,13 +96,25 @@ export default function AnswerView({ answer }) {
 					{/*</Grid>*/}
 				</Grid>
 				<Grid item>
-					<Box sx={{ marginLeft: 1 }}>
+					<Box sx={{marginLeft: 1}}>
 						<Typography variant="subtitle1" component="div">
 							{answer["answer_uniq_id"] + " answers"}
 						</Typography>
 						<Typography variant="subtitle1" component="div">
 							$19.00
 						</Typography>
+						{
+							user && user["username"] === answer["user_username"] ?
+								<>
+									<Box sx={{marginLeft: 1}}>
+										<Button onClick={() => handleDelete(answer["answer_uniq_id"])}>Delete</Button>
+									</Box>
+									<Box>
+										<Button onClick={handleEdit}>Edit</Button>
+									</Box>
+								</>
+								: <></>
+						}
 					</Box>
 				</Grid>
 			</Grid>

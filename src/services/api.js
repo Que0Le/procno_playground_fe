@@ -84,6 +84,19 @@ let api = {
 
     },
 
+    deleteAnswerByUniqId: (answerUniqId) => {
+        let headers = {}
+        return fetch(
+            ENDPOINTS.ownAnswerEndpoint + answerUniqId,
+            {method: "DELETE", headers: headers, credentials: "include"}
+        ).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            return {message: "Something wrong!"};
+        })
+    },
+
     // TODO: filter, limit ...
     getOwnerTopics: (user) => {
         let headers = {

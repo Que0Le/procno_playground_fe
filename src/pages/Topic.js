@@ -60,7 +60,10 @@ export default function Topic() {
 							{
 								currentAnswers.length > 0 ?
 									<>
-										<AnswerViewList answers={currentAnswers}/>
+										<AnswerViewList
+											user={user} answers={currentAnswers}
+											setAreAnswersLoaded={setAreAnswersLoaded}
+										/>
 									</>
 									: <></>
 							}
