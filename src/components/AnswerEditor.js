@@ -9,7 +9,7 @@ const labels = {
 	"__ANSWER_commentar_input": "Commentar"
 }
 
-export default function AnswerEditor({user, oldAnswer, isNewAnswer, topicUniqId}) {
+export default function AnswerEditor({user, setAreAnswersLoaded, oldAnswer, isNewAnswer, topicUniqId}) {
 	
 	const [errorMessage, setErrorMessage] = useState("");
 	const [recordFile, setRecordFile] = useState(null);
@@ -40,8 +40,8 @@ export default function AnswerEditor({user, oldAnswer, isNewAnswer, topicUniqId}
 		}
 
 		if (isNewAnswer) {
-			newAnswer.append("owner_uniq_id", user ? user["uniq_id"] : "");
-			newAnswer.append("record_filename", "__PLACE__HOLDER__");
+			// newAnswer.append("owner_uniq_id", user ? user["uniq_id"] : "");
+			// newAnswer.append("record_filename", "__PLACE__HOLDER__");
 			newAnswer.append("commentar", inputValues["commentar_input"]);
 			newAnswer.append("topic_uniq_id", topicUniqId);
 			newAnswer.append("file", recordFile);
@@ -51,11 +51,12 @@ export default function AnswerEditor({user, oldAnswer, isNewAnswer, topicUniqId}
 		// setErrorMessage("");
 		// console.log(newAnswer);
 
-		api.sendAnswerToServer(user={user}, isNewAnswer, isNewAnswer ? newAnswer : oldAnswer)
+		api.sendAnswerToServer(isNewAnswer, isNewAnswer ? newAnswer : oldAnswer)
 			.then(response => {
 				if (response["status"] === "success") {
 					setErrorMessage("");
 					handleClear();
+					setAreAnswersLoaded(false);
 				} else {
 					setErrorMessage(response["message"])
 				}

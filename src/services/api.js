@@ -48,33 +48,8 @@ let api = {
         });
     },
 
-    // sendTopicToServer: (user, isNewTopic, topic) => {
-    //     let token = (user["user"]["access_token"])
-    //     // console.log(topic)
-    //     let headers = {
-    //         "Content-type": "application/json",
-    //         "Authorization": `Bearer ${token}`
-    //     }
-    //     return fetch(
-    //         ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
-    //         {
-    //             method: isNewTopic ? "POST" : "PUT",
-    //             headers: headers,
-    //             body: JSON.stringify(topic),
-    //         }
-    //     ).then(response => response.json())
-    //         // TODO: check 201, verify, ...
-    //         .then(data => {
-    //             return data;
-    //         })
-    // },
-
     sendTopicToServer: (user, isNewTopic, topic) => {
-        // console.log(topic)
-        let headers = {
-            // "Content-type": "application/json",
-            // "Authorization": `Bearer ${token}`
-        }
+        let headers = {}
         return fetch(
             ENDPOINTS.topicEndpoint + (isNewTopic ? "" : topic["topic_uniq_id"]),
             {
@@ -91,32 +66,28 @@ let api = {
     },
 
     sendAnswerToServer: (isNewAnswer, answer) => {
-        // console.log(topic)
-        let headers = {
-            // "Content-type": "application/json",
-            // "Authorization": `Bearer ${token}`
-        }
+        let headers = {}
         return fetch(
-            ENDPOINTS.answerEndpoint + (isNewAnswer ? "" : answer["topic_uniq_id"]),
+            ENDPOINTS.ownAnswerEndpoint + (isNewAnswer ? "" : answer["answer_uniq_id"]),
             {
                 method: isNewAnswer ? "POST" : "PUT",
                 headers: headers,
                 body: answer,
                 credentials: "include"
             }
-        ).then(response => response.json())
-            // TODO: check 201, verify, ...
-            .then(data => {
-                return data;
-            })
+        ).then(response => {
+            return response.json()
+        }).catch(error => {
+            console.log(error);
+            return {message: "something wrong!"}
+        })
+
     },
 
     // TODO: filter, limit ...
     getOwnerTopics: (user) => {
         let headers = {
             "Content-type": "application/json",
-            // "credentials": "include"
-            // "Authorization": `Bearer ${user["access_token"]}`
         }
         return fetch(
             ENDPOINTS.getOwnTopics,

@@ -10,4 +10,5 @@ export const ENDPOINTS = {
     getAnswersForTopicByTopicUniqID: process.env.GET_ANSWERS_FOR_TOPIC_BY_TOPIC_UNIQ_ID || BASE_API + "/answers/for-topic/",
     getAudioRecordByFileName: process.env.GET_AUDIO_RECORD_BY_FILE_NAME || BASE_API + "/data/record-or-dummy/",
     topicEndpoint: process.env.TOPIC_ENDPOINT || BASE_API + "/topics/own-topics/",
+    ownAnswerEndpoint: process.env.OWN_ANSWER_ENDPOINT || BASE_API + "/answers/own-answers/",
 }

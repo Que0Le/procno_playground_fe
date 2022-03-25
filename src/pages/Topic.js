@@ -71,7 +71,10 @@ export default function Topic() {
 		</Box>
 		{ user ?
 			<>
-				<AnswerEditor user={user} isNewAnswer={true} topicUniqId={topicUniqId}/>
+				<AnswerEditor
+					user={user} setAreAnswersLoaded={setAreAnswersLoaded}
+					isNewAnswer={true} topicUniqId={topicUniqId}
+				/>
 			</>
 			: <></>
 
