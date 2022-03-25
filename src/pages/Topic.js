@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import AnswerViewList from "../components/AnswerViewList";
 import TopicView from "../components/TopicView";
 import {getUserFromLocalStorage} from "../utils/helpers";
+import AnswerEditor from "../components/AnswerEditor";
 
 export default function Topic() {
 	const [user, setUser] = useState(null);
@@ -68,5 +69,12 @@ export default function Topic() {
 					: <></>
 			}
 		</Box>
+		{ user ?
+			<>
+				<AnswerEditor user={user} isNewAnswer={true} topicUniqId={topicUniqId}/>
+			</>
+			: <></>
+
+		}
 	</>;
 }

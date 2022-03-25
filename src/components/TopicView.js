@@ -107,6 +107,17 @@ export default function TopicView({user = null, topicOverview}) {
 			});
 	}
 
+	function handleAddComment() {
+		console.log(new Date())
+		// api.deleteTopicByUniqIdTopics(user = {user}, topicUniqId)
+		// 	.then(response => {
+		// 		console.log({response: response});
+		// 		if (response["status"] === "success") {
+		// 			changeRoute("/home");
+		// 		}
+		// 	});
+	}
+
 	function handleEdit() {
 		// TODO: implement
 	}
@@ -172,6 +183,15 @@ export default function TopicView({user = null, topicOverview}) {
 						<Typography variant="subtitle1" component="div">
 							$19.00
 						</Typography>
+						{
+							user
+								? <>
+									<Box>
+										<Button onClick={handleAddComment}>Add Comment</Button>
+									</Box>
+								</>
+								: <></>
+						}
 						{
 							user && user["username"] === topicOverview["owner_username"]
 								? <>

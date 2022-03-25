@@ -70,7 +70,6 @@ let api = {
     // },
 
     sendTopicToServer: (user, isNewTopic, topic) => {
-        let token = (user["user"]["access_token"])
         // console.log(topic)
         let headers = {
             // "Content-type": "application/json",
@@ -82,6 +81,27 @@ let api = {
                 method: isNewTopic ? "POST" : "PUT",
                 headers: headers,
                 body: topic,
+                credentials: "include"
+            }
+        ).then(response => response.json())
+            // TODO: check 201, verify, ...
+            .then(data => {
+                return data;
+            })
+    },
+
+    sendAnswerToServer: (isNewAnswer, answer) => {
+        // console.log(topic)
+        let headers = {
+            // "Content-type": "application/json",
+            // "Authorization": `Bearer ${token}`
+        }
+        return fetch(
+            ENDPOINTS.answerEndpoint + (isNewAnswer ? "" : answer["topic_uniq_id"]),
+            {
+                method: isNewAnswer ? "POST" : "PUT",
+                headers: headers,
+                body: answer,
                 credentials: "include"
             }
         ).then(response => response.json())
