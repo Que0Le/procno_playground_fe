@@ -7,7 +7,7 @@ export default function AnswerViewList({user, answers, setAreAnswersLoaded }) {
 	return <>
 		<React.Fragment>
 			<CssBaseline/>
-			<Container fixed sx={{width: 800}}>
+			<Container fixed>
 				{answers.map((answer) => {
 					return <AnswerView
 						key={answers["answer_uniq_id"]}

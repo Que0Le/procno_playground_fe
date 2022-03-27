@@ -1,6 +1,5 @@
 import {Button, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import React from "react";
 import Box from "@mui/material/Box";
 import {ENDPOINTS} from "../utils/config";
@@ -29,15 +28,7 @@ export default function TopicOverview({ user, topicOverview, setAreTopicsLoaded,
 		// TODO: implement
 	}
 
-	return <Paper
-		sx={{
-			p: 2,
-			margin: "auto",
-			maxWidth: 700,
-			flexGrow: 1,
-			backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-		}}
-	>
+	return <>
 		<Grid container spacing={2}>
 			<Grid item>
 				<Box sx={{ width: 200, height: 128}}>
@@ -97,5 +88,5 @@ export default function TopicOverview({ user, topicOverview, setAreTopicsLoaded,
 				</Grid>
 			</Grid>
 		</Grid>
-	</Paper>;
+	</>;
 }

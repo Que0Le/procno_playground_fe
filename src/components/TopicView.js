@@ -111,15 +111,7 @@ export default function TopicView({user = null, topicOverview}) {
 		// TODO: implement
 	}
 
-	return <Paper
-		sx={{
-			p: 2,
-			margin: "auto",
-			maxWidth: 700,
-			flexGrow: 1,
-			backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-		}}
-	>
+	return <>
 		<Grid container spacing={2}>
 			<Grid item xs={12} sm container>
 				<Grid item xs container direction="column" spacing={2}>
@@ -169,9 +161,6 @@ export default function TopicView({user = null, topicOverview}) {
 						<Typography variant="subtitle1" component="div">
 							{topicOverview["nbr_answer"] + " answers"}
 						</Typography>
-						<Typography variant="subtitle1" component="div">
-							$19.00
-						</Typography>
 						{
 							user && user["username"] === topicOverview["owner_username"]
 								? <>
@@ -188,5 +177,5 @@ export default function TopicView({user = null, topicOverview}) {
 				</Grid>
 			</Grid>
 		</Grid>
-	</Paper>;
+	</>;
 }

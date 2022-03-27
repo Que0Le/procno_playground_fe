@@ -1,17 +1,29 @@
 import React from "react";
 import {Container, CssBaseline} from "@mui/material";
 import TopicOverview from "./TopicOverview";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 
 export default function TopicOverviewList({ user, topicOverviews, setAreTopicsLoaded }) {
 	return <>
 		<React.Fragment>
 			<CssBaseline/>
-			<Container fixed sx={{width: 800}}>
-				{topicOverviews.map((topicOverview, key) => {
-					return <TopicOverview key={key} user={user} topicOverview={topicOverview} setAreTopicsLoaded={setAreTopicsLoaded}/>;
-				})}
-			</Container>
+				<Paper
+					sx={{
+						p: 2,
+						margin: "auto",
+						maxWidth: 800,
+						flexGrow: 1,
+						backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+					}}
+				>
+						{topicOverviews.map((topicOverview, key) => {
+						return <Box key={key}>
+							<TopicOverview user={user} topicOverview={topicOverview} setAreTopicsLoaded={setAreTopicsLoaded}/>;
+						</Box>
+					})}
+			</Paper>
 		</React.Fragment>
 	</>
 }
