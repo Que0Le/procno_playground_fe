@@ -20,18 +20,10 @@ export default class AudioRecorder extends React.Component {
 		}
 	}
 	handleAudioStop(data){
-		// console.log(data)
 		this.setState({ audioDetails: data });
 	}
 
 	handleAudioUpload(file) {
-		console.log(file);
-		// Download file:
-		// let csvURL = window.URL.createObjectURL(file);
-		// let tempLink = document.createElement("a");
-		// tempLink.href = csvURL;
-		// tempLink.setAttribute("download", "filename.webm");
-		// tempLink.click();
 		this.props.setRecordFile(file);
 	}
 

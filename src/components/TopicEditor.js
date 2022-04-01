@@ -19,51 +19,9 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 	const [errorMessage, setErrorMessage] = useState("");
 	const [recordFile, setRecordFile] = useState(null);
 	const changeRoute = useChangeRoute();
-	// console.log(recordFile)
 
 	function handleSubmit() {
-		// let newTopic = {}
-		// let inputValues = {
-		// 	"title_input": document.getElementById("title_input").value,
-		// 	"source_languages_input": document.getElementById("source_languages_input").value,
-		// 	"source_level_input": document.getElementById("source_level_input").value,
-		// 	"wish_languages_input": document.getElementById("wish_languages_input").value,
-		// 	"tags_input": document.getElementById("tags_input").value,
-		// 	"readtext_input": document.getElementById("readtext_input").value,
-		// 	"commentar_input": document.getElementById("commentar_input").value
-		// }
-		// let constructMessage = ""
-		// for (const [key, value] of Object.entries(inputValues)) {
-		// 	// console.log(`${key}: ${value}`);
-		// 	if (value === "") {
-		// 		constructMessage += labels[key] + ", ";
-		// 	}
-		// }
-		// if (constructMessage !== "") {
-		// 	setErrorMessage("No empty field allowed: " + constructMessage.substring(0, constructMessage.length - 2));
-		// 	return;
-		// }
-		//
-		// if (isNewTopic) {
-		// 	newTopic["topic_title"] = inputValues["title_input"]
-		// 	newTopic["source_language"] = inputValues["source_languages_input"]
-		// 	newTopic["source_level"] = inputValues["source_level_input"]
-		// 	newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
-		// 	newTopic["owner_username"] = user ? user["username"] : ""
-		// 	newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-		// 	newTopic["tags"] = inputValues["tags_input"].split(",")
-		// 	newTopic["readtext"] = inputValues["readtext_input"]
-		// 	newTopic["record_filename"] = "__PLACE__HOLDER__"
-		// 	newTopic["commentar"] = inputValues["commentar_input"]
-		// } else {
-		// 	oldTopic["topic_title"] = inputValues["title_input"]
-		// 	oldTopic["source_language"] = inputValues["source_languages_input"]
-		// 	oldTopic["source_level"] = inputValues["source_level_input"]
-		// 	oldTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-		// 	oldTopic["tags"] = inputValues["tags_input"].split(",")
-		// 	oldTopic["readtext"] = inputValues["readtext_input"]
-		// 	oldTopic["commentar"] = inputValues["commentar_input"]
-		// }
+
 		let newTopic = new FormData();
 		if (!recordFile) {
 			setErrorMessage("Record file is empty. Create one!");
@@ -104,27 +62,10 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 			newTopic.append("record_filename", "__PLACE__HOLDER__");
 			newTopic.append("commentar", inputValues["commentar_input"]);
 			newTopic.append("file", recordFile);
-			// newTopic["topic_title"] = inputValues["title_input"]
-			// newTopic["source_language"] = inputValues["source_languages_input"]
-			// newTopic["source_level"] = inputValues["source_level_input"]
-			// newTopic["owner_uniq_id"] = user ? user["uniq_id"] : ""
-			// newTopic["owner_username"] = user ? user["username"] : ""
-			// newTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-			// newTopic["tags"] = inputValues["tags_input"].split(",")
-			// newTopic["readtext"] = inputValues["readtext_input"]
-			// newTopic["record_filename"] = "__PLACE__HOLDER__"
-			// newTopic["commentar"] = inputValues["commentar_input"]
 		} else {
-			// oldTopic["topic_title"] = inputValues["title_input"]
-			// oldTopic["source_language"] = inputValues["source_languages_input"]
-			// oldTopic["source_level"] = inputValues["source_level_input"]
-			// oldTopic["wish_correct_languages"] = inputValues["wish_languages_input"].split(",")
-			// oldTopic["tags"] = inputValues["tags_input"].split(",")
-			// oldTopic["readtext"] = inputValues["readtext_input"]
-			// oldTopic["commentar"] = inputValues["commentar_input"]
+			// TODO
 		}
-		// setErrorMessage("");
-		// console.log(newTopic);
+
 		api.sendTopicToServer(user={user}, isNewTopic, isNewTopic ? newTopic : oldTopic)
 			.then(response => {
 				if (response["status"] === "success") {
@@ -149,11 +90,11 @@ export default function TopicEditor({user, oldTopic, isNewTopic, changeRouteToNe
 	}
 
 	useEffect(() => {
-		const now = Date.now();
-		Object.keys(labels).forEach(k => {
-			// console.log(k)
-			document.getElementById(k).value = now;
-		})
+		// const now = Date.now();
+		// Object.keys(labels).forEach(k => {
+		// 	// console.log(k)
+		// 	document.getElementById(k).value = now;
+		// })
 	})
 	return (
 		<div>
