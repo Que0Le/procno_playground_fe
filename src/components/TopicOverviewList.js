@@ -18,10 +18,13 @@ export default function TopicOverviewList({ user, topicOverviews, setAreTopicsLo
 						backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1A2027" : "#fff",
 					}}
 				>
-						{topicOverviews.map((topicOverview, key) => {
-						return <Box key={key}>
-							<TopicOverview user={user} topicOverview={topicOverview} setAreTopicsLoaded={setAreTopicsLoaded}/>;
-						</Box>
+					{topicOverviews.map((topicOverview) => {
+						return <TopicOverview
+							key={topicOverview["topic_uniq_id"]}
+							user={user}
+							topicOverview={topicOverview}
+							setAreTopicsLoaded={setAreTopicsLoaded}
+						/>;
 					})}
 			</Paper>
 		</React.Fragment>

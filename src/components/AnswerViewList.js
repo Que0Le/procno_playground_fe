@@ -10,7 +10,7 @@ export default function AnswerViewList({user, answers, setAreAnswersLoaded }) {
 			<Container fixed>
 				{answers.map((answer) => {
 					return <AnswerView
-						key={answers["answer_uniq_id"]}
+						key={answer["answer_uniq_id"]}
 						user={user} answer={answer}
 						setAreAnswersLoaded={setAreAnswersLoaded}
 					/>;
